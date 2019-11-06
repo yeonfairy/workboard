@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.board.dao.UserDaoInterface">
+
+	<select id="getPwI" resultType="String">
+		select password from test.user where user_id = #{user_id}
+	</select>
+	
+	<select id="getBoardList" resultType="BoardVO">
+		select * from test.board order by board_id desc
+	</select>
+	
+	<insert id="writeBoardI" parameterType="boardVO">
+		insert into test.board(title, writer, password, con) values(#{title}, #{writer}, #{password}, #{con})
+	</insert>
+	
+	<select id="getBoardViewI" resultType="BoardVO">
+		select * from test.board where board_id = #{board_id}
+	</select>
+	
+	<update id = "changePwI" parameterType="map">
+		update test.board set password = #{param1} where board_id = #{param2}
+	</update>
+	
+	<select id = "getBoardPwI" resultType="String">
+		select password from test.board where board_id = #{board_id}
+	</select>
+	
+	<update id = "changeCntI" parameterType="map">
+		update test.board set view_cnt = #{param2} where board_id = #{param1}
+	</update>
+	
+	<select id="selectUser" resultType="map"> <!-- as앞은 데이터베이스의 컬럼명, as뒤는  사용자 인증과 권한설정클래스에서 정의한 인스턴스명 이름을 입력한다.-->
+		select user_id as username, password as password, enabled as enabled, authority as authority from test.user where user_id = #{username}
+	</select>
+</mapper>
